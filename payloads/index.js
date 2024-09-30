@@ -14,7 +14,7 @@ const managementTemplate = `
 <br>
 <button id="payload-6">Execute custom code</button>
 <br>
-<textarea id="codeeval" style="width:750px;height:500px;" placeholder="Code to evaluate"></textarea>
+<textarea id="codeeval" style="width:700px;height:200px;" placeholder="Code to evaluate"></textarea>
 <br><br>
 <p> Note that this only works on extensions installed by your administrator </p>
 <button id="payload-1">P1 test payload</button>
