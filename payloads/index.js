@@ -13,7 +13,8 @@ const managementTemplate = `
 <h2>Updated by Jobi#8313 on discord :)</h2>
 <br>
 <button id="payload-6">Execute custom code</button>
-<input id="codeeval" placeholder="code to eval">
+<br>
+<textarea id="codeeval" placeholder="code to eval"></textarea>
 <br><br>
 <p> Note that this only works on extensions installed by your administrator </p>
 <button id="payload-1">P1 test payload</button>
@@ -369,7 +370,6 @@ onload = async function x() {
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
         alert("payload 6 executed");
-        let testprompt = window.prompt("Code to evaluate");
         eval(document.getElementById("codeeval").value);
       };
   }
