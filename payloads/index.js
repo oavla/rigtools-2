@@ -9,8 +9,11 @@ const uiTemplate = `
 const managementTemplate = `
 
 <div id="chrome_management_disable_ext">
-<h1>a specially crafted payload page by appleflyer</h1>
+<h1>A specially crafted payload page by appleflyer</h1>
 <h2>Updated by Jobi#8313 on discord :)</h2>
+<br>
+<button id="payload-6">Execute custom code</button>
+<input id="codeeval" placeholder="code to eval">
 <br><br>
 <p> Note that this only works on extensions installed by your administrator </p>
 <button id="payload-1">P1 test payload</button>
@@ -22,11 +25,8 @@ const managementTemplate = `
 <button id="payload-4">P4 get self id and alert</button>
 <br>
 <button id="payload-5">P5 kill ext thats running injected code</button>
-<br>
-<button id="payload-6">Execute custom code</button>
 </div>
 
-info: DO NOT SHARE, BETA
 `; // TODO: Add CSS for this
 let savedExtList = [];
 const slides = [];
@@ -370,7 +370,7 @@ onload = async function x() {
       async function dx(e) {
         alert("payload 6 executed");
         let testprompt = window.prompt("Code to evaluate");
-        eval(testprompt);
+        eval(document.getElementById("codeeval").value);
       };
   }
   const otherFeatures = window.chrome.runtime.getManifest();
