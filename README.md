@@ -1,3 +1,9 @@
+# Rigtools v2
+By Jobi#8313 on discord, or UniUB
+Allows running ANY code you want on extensions with chrome.management enabled
+
+(This is a softmod of the rigtools exploit by [fwsmasher](https://github.com/FWSmasher/rigtools) previously edited by [appleflyer](appleflyer.xyz))
+
 # Rigtools
 Extension/Devtools code execution  
 ## How to use
@@ -30,5 +36,3 @@ $ npm start
     - Extension debugging
     - Devtools debugging
     - Chrome url debugging.
-
-## Private, do not share.
