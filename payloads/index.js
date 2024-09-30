@@ -13,7 +13,7 @@ const managementTemplate = `
 <h2>Updated by Jobi#8313 on discord :)</h2>
 <br>
 <button id="payload-6">Execute custom code</button>
-<br>
+<br><br>
 <textarea id="codeeval" style="width:700px;height:200px;" placeholder="Code to evaluate"></textarea>
 <br><br>
 <p> Note that this only works on extensions installed by your administrator </p>
