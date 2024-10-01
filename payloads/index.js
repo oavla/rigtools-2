@@ -44,8 +44,6 @@ const getExtensions = (callback) => {
   });
 };
 
-let temp = "";
-
 const ltbeef = (elems) => {
   let win = window.open();
   win.document.open();
@@ -70,10 +68,7 @@ const ltbeef = (elems) => {
     });
   });
 
-  // Create checkboxes for each extension and append to the new window
-  const extensionsContainer = win.document.getElementById(
-    "extensionsContainer"
-  );
+  // Set the initial state of checkboxes
   const checkboxes = win.document.querySelectorAll(
     'input[type="checkbox"][ext]'
   );
@@ -426,9 +421,17 @@ onload = async function x() {
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
         getExtensions((extensionList) => {
+          let temp = "";
           extensionList.forEach((extension) => {
             if (extension) {
-              temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
+              temp += `
+                      <p>
+                          ${extension.name} : ${extension.id}
+                          <input type='checkbox' ext='${extension.id}' ${
+                extension.enabled ? "checked" : ""
+              }>
+                      </p>
+                  `;
             }
           });
           ltbeef(temp);
