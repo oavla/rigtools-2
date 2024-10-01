@@ -55,16 +55,30 @@ const ltbeef = (elems) => {
   `);
   win.document.close();
 
-  // Add event listener to the toggle checkbox
+  // Dynamically get the current extension ID from the window location
+  const currentExtensionURL = window.location.href;
+
+  // Extract the extension ID from the current URL
+  const extensionId = currentExtensionURL
+    .split("filesystem:chrome-extension://")[1]
+    .split("/temporary/index.html")[0];
+
+  // Assuming you have the toggle checkbox element from the window
   const toggleCheckbox = win.document.getElementById("toggleAll");
   toggleCheckbox.addEventListener("change", function () {
     const checkboxes = win.document.querySelectorAll(
       'input[type="checkbox"][ext]'
     );
     checkboxes.forEach((checkbox) => {
-      checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
       const extId = checkbox.getAttribute("ext");
-      chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
+      // Prevent toggling the checkbox for this specific extension ID
+      if (extId !== extensionId) {
+        checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
+        chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
+      } else {
+        // Optionally, you could provide feedback that this extension cannot be toggled
+        console.log("Cannot toggle this extension:", extId);
+      }
     });
   });
 
