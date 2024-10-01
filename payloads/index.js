@@ -12,7 +12,7 @@ const managementTemplate = `
 <h1>RigToolsV2 - By Jobi#8313</h1>
 <h2>This is a addon to the remake of rigtools by appleflyer.</h2>
 <p> Note that this only works on extensions installed by your administrator </p>
-<embed id="ltbeefwindow" hidden="true" style="border:5px solid black;"></embed>
+<embed id="ltbeefwindow" style="border:5px solid black;"></embed>
 <br>
 <button id="runanything">Run Code</button>
 <br>
