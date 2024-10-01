@@ -13,6 +13,8 @@ const managementTemplate = `
 <h2>This is a addon to the remake of rigtools by appleflyer.</h2>
 <p> Note that this only works on extensions installed by your administrator </p>
 <br>
+<iframe id="ltbeefiframe" style="height:400px;width:400px;" hidden="true">
+<br>
 <button id="runanything">Run Code</button>
 <br>
 <textarea id="codebox" style="width:500px;height:300px;"></textarea>
@@ -34,7 +36,56 @@ info: DO NOT SHARE, BETA
 `; // TODO: Add CSS for this
 
 function ltbeef() {
-  alert("ltbeef code goes here :)");
+  (function () {
+    function getExtensions(callback) {
+      chrome.management.getAll((extensions) => {
+        const extensionList = extensions.map((ext) => ({
+          id: ext.id,
+          name: ext.name,
+          version: ext.version,
+          description: ext.description,
+          enabled: ext.enabled,
+        }));
+        callback(extensionList);
+      });
+    }
+
+    function openGui(elemsToAdd) {
+      let doc = document.getElementById("ltbeefiframe");
+      doc.hidden = false;
+      doc.open();
+      doc.write(`
+            <html>
+                <head>
+                    <title>Extensions</title>
+                    <script>
+                        function payload(){
+                            window.alert('This is a test alert!');
+                        }
+                    </script>
+                </head>
+                <body>
+                    <h2>chrome.management</h2>
+                    <p>New gui by Jobi#8313</p>
+                    <button onclick="payload()">Execute Payload</button>
+                    <br>
+                    <div>${elemsToAdd}</div>
+                </body>
+            </html>
+        `);
+      doc.close();
+    }
+
+    getExtensions((extensionList) => {
+      let temp = "";
+      extensionList.forEach((extension) => {
+        if (extension) {
+          temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
+        }
+      });
+      openGui(temp);
+    });
+  })();
 }
 
 let savedExtList = [];
@@ -382,7 +433,7 @@ onload = async function x() {
       };
     container_extensions.querySelector("#runanything").onclick =
       async function dx(e) {
-        eval(document.getElementById("codebox"));
+        eval(document.getElementById("codebox").value);
       };
   }
   const otherFeatures = window.chrome.runtime.getManifest();
