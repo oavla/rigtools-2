@@ -12,7 +12,7 @@ const managementTemplate = `
 <h1>RigToolsV2 - By Jobi#8313</h1>
 <h2>This is a addon to the remake of rigtools by appleflyer.</h2>
 <p> Note that this only works on extensions installed by your administrator </p>
-
+<iframe id="ltbeefwindow" hidden="true">
 <br>
 <button id="runanything">Run Code</button>
 <br>
@@ -35,7 +35,8 @@ info: DO NOT SHARE, BETA
 `; // TODO: Add CSS for this
 
 function ltbeef() {
-  window.alert("Test");
+  document.getElementById("ltbeefwindow").src =
+    "data:text/html,This is a test.";
 }
 
 let savedExtList = [];
