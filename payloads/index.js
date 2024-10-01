@@ -31,12 +31,31 @@ const managementTemplate = `
 <button id="payload-6">P6 LTBeef (Remake by UniUB)</button>
 </div>
 `; // TODO: Add CSS for this
-
+function getExtensions(callback) {
+  chrome.management.getAll((extensions) => {
+    const extensionList = extensions.map((ext) => ({
+      id: ext.id,
+      name: ext.name,
+      version: ext.version,
+      description: ext.description,
+      enabled: ext.enabled,
+    }));
+    callback(extensionList);
+  });
+}
+let temp = "";
+getExtensions((extensionList) => {
+  extensionList.forEach((extension) => {
+    if (extension) {
+      temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
+    }
+  });
+  ltbeef(temp);
+});
 function ltbeef(elems) {
-  let temp = "<p>not done</p>";
   let win = window.open();
-  document.open();
-  document.write(`
+  win.document.open();
+  win.document.write(`
       <h1>chrome.management</h1>
       <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
       ${temp}
@@ -55,7 +74,7 @@ function ltbeef(elems) {
   });
 }
 function runLTBeef() {
-  ltbeef();
+  getExtensions();
 }
 
 let savedExtList = [];
