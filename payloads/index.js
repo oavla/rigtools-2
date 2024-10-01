@@ -31,7 +31,7 @@ const managementTemplate = `
 <button id="payload-6">P6 LTBeef (Remake by UniUB)</button>
 </div>
 `; // TODO: Add CSS for this
-function getExtensions(callback) {
+const getExtensions = (callback) => {
   chrome.management.getAll((extensions) => {
     const extensionList = extensions.map((ext) => ({
       id: ext.id,
@@ -42,25 +42,26 @@ function getExtensions(callback) {
     }));
     callback(extensionList);
   });
-}
+};
+
 let temp = "";
-getExtensions((extensionList) => {
-  extensionList.forEach((extension) => {
-    if (extension) {
-      temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
-    }
-  });
-  ltbeef(temp);
-});
-function ltbeef(elems) {
+
+const ltbeef = (elems) => {
   let win = window.open();
   win.document.open();
   win.document.write(`
       <h1>chrome.management</h1>
       <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
-      ${temp}
-      `);
-  win.document.body.append(input);
+      ${elems}
+  `);
+  win.document.close();
+
+  // Create an input element to append to the new window
+  const input = win.document.createElement("input");
+  input.type = "checkbox";
+  input.id = "test"; // Set the ID for the checkbox
+
+  win.document.body.append(input); // Append checkbox to the window body
 
   let checkbox = win.document.querySelector("#test");
 
@@ -72,10 +73,7 @@ function ltbeef(elems) {
       window.alert("Checkbox is unchecked");
     }
   });
-}
-function runLTBeef() {
-  getExtensions();
-}
+};
 
 let savedExtList = [];
 const slides = [];
@@ -417,7 +415,14 @@ onload = async function x() {
       };
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
-        runLTBeef(); // Only call ltbeef when the user clicks the button
+        getExtensions((extensionList) => {
+          extensionList.forEach((extension) => {
+            if (extension) {
+              temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
+            }
+          });
+          ltbeef(temp);
+        });
       };
 
     container_extensions.querySelector("#runanything").onclick =
