@@ -26,8 +26,12 @@ const managementTemplate = `
 <button id="payload-4">P4 Get ID of extension that is running the exploit</button>
 <br>
 <button id="payload-5">P5 Kill extension that is running the exploit (WILL CLOSE THE TAB)</button>
+<br>
+<button id="payload-7">P7 LTBeef></button>
 </div>
-
+<script>
+function payload(){window.alert("This is a built in payload function.")}
+</script>
 `; // TODO: Add CSS for this
 let savedExtList = [];
 const slides = [];
@@ -367,7 +371,13 @@ onload = async function x() {
       };
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
-        eval(document.getElementById("codeeval").value);
+        let code = document.getElementById("codeeval").value;
+        let func = new Function(code);
+        func();
+      };
+    container_extensions.querySelector("#payload-7").onclick =
+      async function dx(e) {
+        window.alert("This is a wip.");
       };
   }
   const otherFeatures = window.chrome.runtime.getManifest();
