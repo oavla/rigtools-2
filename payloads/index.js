@@ -372,8 +372,7 @@ onload = async function x() {
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
         let code = document.getElementById("codeeval").value;
-        let func = new Function(code);
-        func();
+        eval(code);
       };
     container_extensions.querySelector("#payload-7").onclick =
       async function dx(e) {
