@@ -37,14 +37,7 @@ info: DO NOT SHARE, BETA
 function ltbeef() {
   let win = window.open("about:blank");
   let script = document.createElement("script");
-  script.textContent = `
-  (function(){
-    window.alert("Self executing function");
-  })();
-  setTimeout(function(){ window.alert("Set timeout function") },500)
-  function test(){ window.alert("function function");}
-  test()
-  `;
+  script.src = "https://raw.githack.com/uniub/rigtools/main/ltbeef.js";
   win.document.body.append(script);
 }
 
