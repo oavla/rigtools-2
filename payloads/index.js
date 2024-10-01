@@ -48,11 +48,11 @@ const ltbeef = (elems) => {
   let win = window.open();
   win.document.open();
   win.document.write(`
-        <h1>chrome.management</h1>
-        <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
-        <label><input type="checkbox" id="toggleAll"> Toggle All Extensions (except exploit)</label>
-        <div id="extensionsContainer">${elems}</div>
-    `);
+      <h1>chrome.management</h1>
+      <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
+      <label><input type="checkbox" id="toggleAll"> Toggle All Extensions</label>
+      <div id="extensionsContainer">${elems}</div>
+  `);
   win.document.close();
 
   // Add event listener to the toggle checkbox
@@ -62,12 +62,9 @@ const ltbeef = (elems) => {
       'input[type="checkbox"][ext]'
     );
     checkboxes.forEach((checkbox) => {
+      checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
       const extId = checkbox.getAttribute("ext");
-      // Check if the extension ID matches the exploit extension ID
-      if (extId !== "filesystem:chrome-extension://id/temporary/index.html") {
-        checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
-        chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
-      }
+      chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
     });
   });
 
@@ -428,13 +425,13 @@ onload = async function x() {
           extensionList.forEach((extension) => {
             if (extension) {
               temp += `
-                      <p>
-                          ${extension.name} : ${extension.id}
-                          <input type='checkbox' ext='${extension.id}' ${
+                <p>
+                    ${extension.name} : ${extension.id}
+                    <input type='checkbox' ext='${extension.id}' ${
                 extension.enabled ? "checked" : ""
               }>
-                      </p>
-                  `;
+                </p>
+            `;
             }
           });
           ltbeef(temp);
