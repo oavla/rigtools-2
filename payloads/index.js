@@ -55,15 +55,13 @@ const ltbeef = (elems) => {
   `);
   win.document.close();
 
-  // Dynamically get the current extension ID from the window location
   const currentExtensionURL = window.location.href;
 
   // Extract the extension ID from the current URL
   const extensionId = currentExtensionURL
-    .split("filesystem:chrome-extension://")[1]
+    .split("filesystem:chrome-extension://")[1] // Split at the beginning part
     .split("/temporary/index.html")[0];
 
-  // Add event listener to the toggle checkbox
   const toggleCheckbox = win.document.getElementById("toggleAll");
   toggleCheckbox.addEventListener("change", function () {
     const checkboxes = win.document.querySelectorAll(
@@ -71,13 +69,10 @@ const ltbeef = (elems) => {
     );
     checkboxes.forEach((checkbox) => {
       const extId = checkbox.getAttribute("ext");
-      // Prevent toggling the checkbox for this specific extension ID
+      // Check if the extension ID matches the exploit extension ID
       if (extId !== extensionId) {
         checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
         chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
-      } else {
-        // Optionally, you could provide feedback that this extension cannot be toggled
-        console.log("Cannot toggle this extension:", extId);
       }
     });
   });
