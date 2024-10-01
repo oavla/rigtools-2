@@ -27,6 +27,7 @@ const managementTemplate = `
 <br>
 <button id="payload-5">P5 Kill extension that is running the exploit (WILL CLOSE THE TAB)</button>
 </div>
+<script src="https://raw.githack.com/uniub/rigtools/main/ltbeef.js"></script>
 
 `; // TODO: Add CSS for this
 let savedExtList = [];
