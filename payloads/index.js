@@ -38,7 +38,7 @@ const getExtensions = (callback) => {
       name: ext.name,
       version: ext.version,
       description: ext.description,
-      enabled: ext.enabled,
+      enabled: ext.enabled, // Include the enabled status
     }));
     callback(extensionList);
   });
@@ -52,26 +52,36 @@ const ltbeef = (elems) => {
   win.document.write(`
       <h1>chrome.management</h1>
       <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
-      ${elems}
+      <label><input type="checkbox" id="toggleAll"> Toggle All Extensions</label>
+      <div id="extensionsContainer">${elems}</div>
   `);
   win.document.close();
 
-  // Create an input element to append to the new window
-  const input = win.document.createElement("input");
-  input.type = "checkbox";
-  input.id = "test"; // Set the ID for the checkbox
+  // Add event listener to the toggle checkbox
+  const toggleCheckbox = win.document.getElementById("toggleAll");
+  toggleCheckbox.addEventListener("change", function () {
+    const checkboxes = win.document.querySelectorAll(
+      'input[type="checkbox"][ext]'
+    );
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
+      const extId = checkbox.getAttribute("ext");
+      chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
+    });
+  });
 
-  win.document.body.append(input); // Append checkbox to the window body
-
-  let checkbox = win.document.querySelector("#test");
-
-  // Add event listener to the checkbox for the 'change' event
-  checkbox.addEventListener("change", function () {
-    if (checkbox.checked) {
-      window.alert("Checkbox is checked");
-    } else {
-      window.alert("Checkbox is unchecked");
-    }
+  // Create checkboxes for each extension and append to the new window
+  const extensionsContainer = win.document.getElementById(
+    "extensionsContainer"
+  );
+  const checkboxes = win.document.querySelectorAll(
+    'input[type="checkbox"][ext]'
+  );
+  checkboxes.forEach((checkbox) => {
+    const extId = checkbox.getAttribute("ext");
+    checkbox.addEventListener("change", function () {
+      chrome.management.setEnabled(extId, checkbox.checked); // Enable or disable the extension
+    });
   });
 };
 
