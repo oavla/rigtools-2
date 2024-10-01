@@ -1,1 +1,2 @@
-window.alert("Loading Payload...");
+function test(){ window.alert("Test function"); }
+test()
