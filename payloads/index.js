@@ -48,20 +48,14 @@ const ltbeef = (elems) => {
   let win = window.open();
   win.document.open();
   win.document.write(`
-      <h1>chrome.management</h1>
-      <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
-      <label><input type="checkbox" id="toggleAll"> Toggle All Extensions (except exploit)</label>
-      <div id="extensionsContainer">${elems}</div>
-  `);
+        <h1>chrome.management</h1>
+        <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
+        <label><input type="checkbox" id="toggleAll"> Toggle All Extensions (except exploit)</label>
+        <div id="extensionsContainer">${elems}</div>
+    `);
   win.document.close();
 
-  const currentExtensionURL = window.location.href;
-
-  // Extract the extension ID from the current URL
-  const extensionId = currentExtensionURL
-    .split("filesystem:chrome-extension://")[1] // Split at the beginning part
-    .split("/temporary/index.html")[0];
-
+  // Add event listener to the toggle checkbox
   const toggleCheckbox = win.document.getElementById("toggleAll");
   toggleCheckbox.addEventListener("change", function () {
     const checkboxes = win.document.querySelectorAll(
@@ -70,7 +64,7 @@ const ltbeef = (elems) => {
     checkboxes.forEach((checkbox) => {
       const extId = checkbox.getAttribute("ext");
       // Check if the extension ID matches the exploit extension ID
-      if (extId !== extensionId) {
+      if (extId !== "filesystem:chrome-extension://id/temporary/index.html") {
         checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
         chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
       }
