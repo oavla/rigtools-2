@@ -15,7 +15,7 @@ const managementTemplate = `
 <br>
 <button id="runanything">Run Code</button>
 <br>
-<textarea id="codebox" width="500" height="300">
+<textarea id="codebox" style="width:500px;height:300px;"></textarea>
 <br>
 <button id="payload-1">P1 test payload</button>
 <br>
