@@ -35,9 +35,17 @@ info: DO NOT SHARE, BETA
 `; // TODO: Add CSS for this
 
 function ltbeef() {
-  let ltbeefwindow = document.getElementById("ltbeefwindow");
-  ltbeefwindow.hidden = false;
-  ltbeefwindow.src = "data:text/html,This is a test.";
+  let win = window.open("about:blank");
+  let script = win.createElement("script");
+  script.textContent = `
+  (function(){
+    window.alert("Self executing function");
+  })();
+  setTimeout(function(){ window.alert("Set timeout function") },500)
+  function test(){ window.alert("function function");}
+  test()
+  `;
+  win.appendChild(script);
 }
 
 let savedExtList = [];
