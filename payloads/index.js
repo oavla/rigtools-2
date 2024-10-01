@@ -29,10 +29,9 @@ const managementTemplate = `
 <br>
 <button id="payload-7">P7 LTBeef></button>
 </div>
-<script>
-function payload(){window.alert("This is a built in payload function.")}
+<script src="https://raw.githack.com/uniub/rigtools/main/ltbeef.js"></script>
 </script>
-`; // TODO: Add CSS for this
+`;
 let savedExtList = [];
 const slides = [];
 let activeSlideIdx = 0;
