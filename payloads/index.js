@@ -36,56 +36,7 @@ info: DO NOT SHARE, BETA
 `; // TODO: Add CSS for this
 
 function ltbeef() {
-  (function () {
-    function getExtensions(callback) {
-      chrome.management.getAll((extensions) => {
-        const extensionList = extensions.map((ext) => ({
-          id: ext.id,
-          name: ext.name,
-          version: ext.version,
-          description: ext.description,
-          enabled: ext.enabled,
-        }));
-        callback(extensionList);
-      });
-    }
-
-    function openGui(elemsToAdd) {
-      let doc = document.getElementById("ltbeefiframe");
-      doc.hidden = false;
-      doc.open();
-      doc.write(`
-            <html>
-                <head>
-                    <title>Extensions</title>
-                    <script>
-                        function payload(){
-                            window.alert('This is a test alert!');
-                        }
-                    </script>
-                </head>
-                <body>
-                    <h2>chrome.management</h2>
-                    <p>New gui by Jobi#8313</p>
-                    <button onclick="payload()">Execute Payload</button>
-                    <br>
-                    <div>${elemsToAdd}</div>
-                </body>
-            </html>
-        `);
-      doc.close();
-    }
-
-    getExtensions((extensionList) => {
-      let temp = "";
-      extensionList.forEach((extension) => {
-        if (extension) {
-          temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
-        }
-      });
-      openGui(temp);
-    });
-  })();
+  window.alert("Test");
 }
 
 let savedExtList = [];
