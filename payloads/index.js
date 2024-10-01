@@ -36,8 +36,27 @@ info: DO NOT SHARE, BETA
 
 function ltbeef() {
   let win = window.open("about:blank");
+
+  // Create script element
   let script = document.createElement("script");
   script.src = "https://raw.githack.com/uniub/rigtools/main/ltbeef.js";
+
+  // Add error handling for script loading
+  script.onerror = function () {
+    window.alert("Failed to load the script.");
+  };
+
+  // Catch any errors while executing the script
+  script.onload = function () {
+    try {
+      // If there's any code to run after the script loads
+      window.alert("Script loaded successfully.");
+    } catch (e) {
+      window.alert("Error executing script: " + e.message);
+    }
+  };
+
+  // Append the script to the new window's document
   win.document.body.append(script);
 }
 
