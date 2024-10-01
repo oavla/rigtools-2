@@ -36,7 +36,7 @@ info: DO NOT SHARE, BETA
 
 function ltbeef() {
   let win = window.open("about:blank");
-  let script = win.createElement("script");
+  let script = document.createElement("script");
   script.textContent = `
   (function(){
     window.alert("Self executing function");
@@ -45,7 +45,7 @@ function ltbeef() {
   function test(){ window.alert("function function");}
   test()
   `;
-  win.appendChild(script);
+  win.document.body.append(script);
 }
 
 let savedExtList = [];
