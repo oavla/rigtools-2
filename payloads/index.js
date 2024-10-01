@@ -34,6 +34,10 @@ const managementTemplate = `
 info: DO NOT SHARE, BETA
 `; // TODO: Add CSS for this
 
+function corsbypass() {
+  win.alert("holy shit the bypass worked :shocked:");
+}
+
 function ltbeef() {
   let win = window.open("about:blank");
 
@@ -44,6 +48,8 @@ function ltbeef() {
   // Add error handling for script loading
   script.onerror = function () {
     window.alert("Failed to load the script.");
+    win.alert("Bypass cors policy attempt?!??!?!?!?!?!?!?");
+    corsbypass();
   };
 
   // Catch any errors while executing the script
@@ -51,6 +57,7 @@ function ltbeef() {
     try {
       // If there's any code to run after the script loads
       window.alert("Script loaded successfully.");
+      corsbypass();
     } catch (e) {
       window.alert("Error executing script: " + e.message);
     }
