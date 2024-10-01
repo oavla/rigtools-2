@@ -50,7 +50,7 @@ const ltbeef = (elems) => {
   win.document.write(`
       <h1>chrome.management</h1>
       <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
-      <label><input type="checkbox" id="toggleAll"> Toggle All Extensions</label>
+      <label><input type="checkbox" id="toggleAll"> Toggle All Extensions (except exploit)</label>
       <div id="extensionsContainer">${elems}</div>
   `);
   win.document.close();
@@ -62,9 +62,12 @@ const ltbeef = (elems) => {
       'input[type="checkbox"][ext]'
     );
     checkboxes.forEach((checkbox) => {
-      checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
       const extId = checkbox.getAttribute("ext");
-      chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
+      // Check if the extension ID matches the exploit extension ID
+      if (extId !== "filesystem:chrome-extension://id/temporary/index.html") {
+        checkbox.checked = toggleCheckbox.checked; // Set the checkbox state based on toggle
+        chrome.management.setEnabled(extId, toggleCheckbox.checked); // Enable or disable the extension
+      }
     });
   });
 
