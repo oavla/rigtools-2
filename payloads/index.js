@@ -30,41 +30,53 @@ const managementTemplate = `
 <br>
 <button id="payload-6">P6 LTBeef (Remake by UniUB)</button>
 </div>
-
-info: DO NOT SHARE, BETA
 `; // TODO: Add CSS for this
 
-function corsbypass() {
-  win.alert("holy shit the bypass worked :shocked:");
+function getExtensions(callback) {
+  chrome.management.getAll((extensions) => {
+      const extensionList = extensions.map(ext => ({
+          id: ext.id,
+          name: ext.name,
+          version: ext.version,
+          description: ext.description,
+          enabled: ext.enabled
+      }));
+      callback(extensionList);
+  });
 }
+getExtensions((extensionList) => {
+  let temp = "";
+  extensionList.forEach(extension => {
+      if (extension) {
+          temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
+      }
+  });
+  ltbeef(temp);
+});
 
-function ltbeef() {
-  let win = window.open("about:blank");
+function ltbeef(elems) {
+  let win = window.open()
+  document.open()
+  document.write(`
+      <h1>chrome.management</h1>
+      <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
+      ${temp}
+      `)
+  win.document.body.append(input)
 
-  // Create script element
-  let script = document.createElement("script");
-  script.src = "https://raw.githack.com/uniub/rigtools/main/ltbeef.js";
+  let checkbox = win.document.querySelector("#test")
 
-  // Add error handling for script loading
-  script.onerror = function () {
-    window.alert("Failed to load the script.");
-    win.alert("Bypass cors policy attempt?!??!?!?!?!?!?!?");
-    corsbypass();
-  };
-
-  // Catch any errors while executing the script
-  script.onload = function () {
-    try {
-      // If there's any code to run after the script loads
-      window.alert("Script loaded successfully.");
-      corsbypass();
-    } catch (e) {
-      window.alert("Error executing script: " + e.message);
-    }
-  };
-
-  // Append the script to the new window's document
-  win.document.body.append(script);
+  // Add event listener to the checkbox for the 'change' event
+  checkbox.addEventListener("change", function() {
+      if (checkbox.checked) {
+          window.alert("Checkbox is checked")
+      } else {
+          window.alert("Checkbox is unchecked")
+      }
+  })
+}
+function runLTBeef(){
+  getExtensions()
 }
 
 let savedExtList = [];
@@ -407,8 +419,7 @@ onload = async function x() {
       };
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
-        alert("This is a WIP sorry if its buggy o-o");
-        ltbeef();
+        runLTBeef()
       };
     container_extensions.querySelector("#runanything").onclick =
       async function dx(e) {
