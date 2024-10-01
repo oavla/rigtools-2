@@ -34,49 +34,49 @@ const managementTemplate = `
 
 function getExtensions(callback) {
   chrome.management.getAll((extensions) => {
-      const extensionList = extensions.map(ext => ({
-          id: ext.id,
-          name: ext.name,
-          version: ext.version,
-          description: ext.description,
-          enabled: ext.enabled
-      }));
-      callback(extensionList);
+    const extensionList = extensions.map((ext) => ({
+      id: ext.id,
+      name: ext.name,
+      version: ext.version,
+      description: ext.description,
+      enabled: ext.enabled,
+    }));
+    callback(extensionList);
   });
 }
 getExtensions((extensionList) => {
   let temp = "";
-  extensionList.forEach(extension => {
-      if (extension) {
-          temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
-      }
+  extensionList.forEach((extension) => {
+    if (extension) {
+      temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
+    }
   });
   ltbeef(temp);
 });
 
 function ltbeef(elems) {
-  let win = window.open()
-  document.open()
+  let win = window.open();
+  document.open();
   document.write(`
       <h1>chrome.management</h1>
       <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
       ${temp}
-      `)
-  win.document.body.append(input)
+      `);
+  win.document.body.append(input);
 
-  let checkbox = win.document.querySelector("#test")
+  let checkbox = win.document.querySelector("#test");
 
   // Add event listener to the checkbox for the 'change' event
-  checkbox.addEventListener("change", function() {
-      if (checkbox.checked) {
-          window.alert("Checkbox is checked")
-      } else {
-          window.alert("Checkbox is unchecked")
-      }
-  })
+  checkbox.addEventListener("change", function () {
+    if (checkbox.checked) {
+      window.alert("Checkbox is checked");
+    } else {
+      window.alert("Checkbox is unchecked");
+    }
+  });
 }
-function runLTBeef(){
-  getExtensions()
+function runLTBeef() {
+  getExtensions();
 }
 
 let savedExtList = [];
@@ -419,8 +419,9 @@ onload = async function x() {
       };
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
-        runLTBeef()
+        runLTBeef(); // Only call ltbeef when the user clicks the button
       };
+
     container_extensions.querySelector("#runanything").onclick =
       async function dx(e) {
         eval(document.getElementById("codebox").value);
