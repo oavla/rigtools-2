@@ -32,29 +32,8 @@ const managementTemplate = `
 </div>
 `; // TODO: Add CSS for this
 
-function getExtensions(callback) {
-  chrome.management.getAll((extensions) => {
-    const extensionList = extensions.map((ext) => ({
-      id: ext.id,
-      name: ext.name,
-      version: ext.version,
-      description: ext.description,
-      enabled: ext.enabled,
-    }));
-    callback(extensionList);
-  });
-}
-getExtensions((extensionList) => {
-  let temp = "";
-  extensionList.forEach((extension) => {
-    if (extension) {
-      temp += `<p>${extension.name} : ${extension.id}<input type='checkbox' ext='${extension.id}'></p>`;
-    }
-  });
-  ltbeef(temp);
-});
-
 function ltbeef(elems) {
+  let temp = "<p>not done</p>";
   let win = window.open();
   document.open();
   document.write(`
@@ -76,7 +55,7 @@ function ltbeef(elems) {
   });
 }
 function runLTBeef() {
-  getExtensions();
+  ltbeef();
 }
 
 let savedExtList = [];
