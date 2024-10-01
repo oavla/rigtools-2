@@ -48,7 +48,7 @@ const ltbeef = (elems) => {
   let win = window.open();
   win.document.open();
   win.document.write(`
-      <h1>chrome.management</h1>
+      <h1>chrome.management Disable extensions.</h1>
       <h2>Made by Jobi#8313, this is ltbeef but for the rigtools exploit :D</h2>
       <label><input type="checkbox" id="toggleAll"> Toggle All Extensions</label>
       <div id="extensionsContainer">${elems}</div>
