@@ -1,38 +1,150 @@
-# Rigtools v2
-By Jobi#8313 on discord, or UniUB
-Allows running ANY code you want on extensions with chrome.management enabled
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoclicker with Draggable Window</title>
+    <style>
+        /* Style for the draggable icon */
+        #draggableIcon {
+            width: 50px;
+            height: 50px;
+            background-color: lightgray;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
 
-(This is a softmod of the rigtools exploit by [fwsmasher](https://github.com/FWSmasher/rigtools) previously edited by [appleflyer](appleflyer.xyz))
+        /* Style for the mini window */
+        #miniWindow {
+            width: 200px;
+            height: 100px;
+            background-color: white;
+            border: 2px solid gray;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            display: none;
+            padding: 10px;
+        }
 
-# Rigtools
-Extension/Devtools code execution  
-## How to use
-```sh
-$ git clone https://github.com/fwsmasher/rigtools 
-$ cd rigtools
-$ npm i
-# Create a file named `server_config.json`
-# Then paste in `{"updater_url":"localhost:8080"}` (Or whatever your websocket URL is)
-$ npm start
-```
-- Then visit `devtools://devtools/bundled/devtools_app.html` in your browser
-- Open a new tab and visit `devtools://devtools/bundled/devtools_app.html?experiments=true&ws=*websocket url*`
-- Click on `Network`
-- Then click on the gray box twice
+        /* Draggable window header */
+        #windowHeader {
+            background-color: gray;
+            padding: 5px;
+            cursor: move;
+        }
 
-## Terminology
-- Entry
-  - Entrypoint (or main script) when running devtools xss.
-  - Payload
-  - Script passed to extension to run code, such as disabling extensions.
-- Chrome URLs
-  - Elevated URLs that have extra access to features such as WebUI.
-  - Only modify the entrypoint when necessary. If not modified properly, thigns such as the updater will break, do not remove any buttons and reuse ids.
+        /* Drag button */
+        .drag-button {
+            margin: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
 
-## Release information
-- Release 0.0.1
-  - This release contains the following things:
-    - Updater
-    - Extension debugging
-    - Devtools debugging
-    - Chrome url debugging.
+    <!-- Draggable Icon -->
+    <div id="draggableIcon">⚙️</div>
+
+    <!-- Draggable Mini Window -->
+    <div id="miniWindow">
+        <div id="windowHeader">Autoclicker</div>
+        <button class="drag-button" onclick="startAutoClick()">Start</button>
+        <button class="drag-button" onclick="stopAutoClick()">Stop</button>
+    </div>
+
+    <script>
+        let autoClickInterval = null;
+
+        // Function to simulate a click at the current mouse position
+        function autoClicker() {
+            const mouseEvent = new MouseEvent("click", {
+                view: window,
+                bubbles: true,
+                cancelable: true,
+                clientX: currentMouseX,
+                clientY: currentMouseY
+            });
+            document.dispatchEvent(mouseEvent);
+        }
+
+        // Start the autoclicker
+        function startAutoClick(interval = 1000) {
+            if (!autoClickInterval) {
+                autoClickInterval = setInterval(autoClicker, interval);
+            }
+        }
+
+        // Stop the autoclicker
+        function stopAutoClick() {
+            if (autoClickInterval) {
+                clearInterval(autoClickInterval);
+                autoClickInterval = null;
+            }
+        }
+
+        // Variables to track the mouse position
+        let currentMouseX = 0;
+        let currentMouseY = 0;
+
+        // Update the mouse position when it moves
+        document.addEventListener("mousemove", function(e) {
+            currentMouseX = e.clientX;
+            currentMouseY = e.clientY;
+        });
+
+        // Make the window draggable
+        function makeDraggable(element, dragHandle) {
+            let offsetX = 0, offsetY = 0, mouseX = 0, mouseY = 0;
+
+            dragHandle.onmousedown = function(e) {
+                e.preventDefault();
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            };
+
+            function elementDrag(e) {
+                e.preventDefault();
+                offsetX = mouseX - e.clientX;
+                offsetY = mouseY - e.clientY;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                element.style.top = (element.offsetTop - offsetY) + "px";
+                element.style.left = (element.offsetLeft - offsetX) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        // Initialize draggable elements
+        const icon = document.getElementById("draggableIcon");
+        const miniWindow = document.getElementById("miniWindow");
+        const windowHeader = document.getElementById("windowHeader");
+
+        // Toggle mini window visibility when clicking the icon
+        icon.onclick = function() {
+            if (miniWindow.style.display === "none") {
+                miniWindow.style.display = "block";
+            } else {
+                miniWindow.style.display = "none";
+            }
+        };
+
+        // Make the mini window draggable
+        makeDraggable(miniWindow, windowHeader);
+    </script>
+
+</body>
+</html>
